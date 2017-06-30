@@ -10,6 +10,12 @@ class NodeTest < Minitest::Test
     node = Node.new("doop")
     assert_equal "doop", node.data
   end
+
+  def test_nextnode_returns_nil
+    node = Node.new("doop")
+    assert_equal nil, node.next_node
+  end
+
   def test_find_next_node
     data = "doop"
     node = Node.new(data)

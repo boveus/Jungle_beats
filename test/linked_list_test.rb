@@ -6,6 +6,8 @@
 #   - Method .to_string returns all nodes as a single string
 #   - *list method contains first node? or all nodes?*
 gem 'minitest'
+
+require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
 
@@ -14,23 +16,35 @@ require './lib/node'
 
 
 class LinkedListTest < Minitest::Test
-
-  def head_returns_head_node
-      data = "doop"
-      head_node = new.Node(data)
-      list = new.LinkedList
-      list.assign_head_node(head_node)
-
-      assert_equal head_node, list.head_node
-
+  def test_head_returns_head_node
+    list = LinkedList.new
+    node = Node.new("doop")
+    list.assign_head_node(node)
+    assert_equal node, list.head_node
   end
-  def next_returns_next_node
-    skip
-  end
-
-  def count_returns_count
+  def test_next_returns_next_node
+    list = LinkedList.new
+    node = Node.new("doop")
+    list.assign_head_node(node)
+    assert_equal list.next, 1
   end
 
-  def to_string_returns_all_nodes
+  def test_count_returns_count
+    node = Node.new("doop")
+    list = LinkedList.new
+    list.assign_head_node(node)
+    2.times do
+      list.append_node(node)
+    end
+    assert_equal list.node_list.count, 3
+  end
+  def test_to_string_returns_all_nodes
+    list = LinkedList.new
+    node = Node.new("doop")
+    list.assign_head_node(node)
+    2.times do
+      list.append_node(node)
+    end
+    assert_equal "doop doop doop ", list.to_string
   end
 end
