@@ -19,8 +19,13 @@ class NodeTest < Minitest::Test
   def test_find_next_node
     data = "doop"
     node = Node.new(data)
-    node.assign_next_node(1)
-    assert_equal 1, node.next_node
+    node.next_node
+    assert_equal 1, node.next
   end
 
+  def test_is_head_node
+    node = Node.new("doop")
+    node.make_headnode
+    assert_equal node.is_headnode?, true
+  end
 end

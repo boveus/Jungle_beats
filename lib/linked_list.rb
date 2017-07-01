@@ -8,13 +8,17 @@ class LinkedList
   end
   def assign_head_node(head_node)
     @head_node = head_node
-    @node_list << head_node
+    head_node.make_headnode
+    @node_list.unshift(head_node)
   end
   def next
     @current_node += 1
   end
-  def append_node(node)
-    @node_list << node
+  def append(data)
+    @node_list << Node.new(data)
+  end
+  def head
+    @head_node
   end
   def to_string
     song = ""
@@ -25,6 +29,9 @@ class LinkedList
       song = song + lyric
     end
     return song
+  end
+  def next_node
+    @node_list[@current_node].next
   end
 end
 #
