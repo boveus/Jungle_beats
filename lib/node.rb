@@ -24,9 +24,13 @@ class Node
   def is_headnode
     @headnode = true
     @index = 0
+    @previous_node = nil
   end
 
   def change_index(index)
+    if index != 0
+      @headnode = false
+    end
     @index = index
   end
 
