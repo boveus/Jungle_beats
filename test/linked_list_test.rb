@@ -16,13 +16,6 @@ require './lib/node'
 
 
 class LinkedListTest < Minitest::Test
-  def test_head_returns_head_node
-    list = LinkedList.new
-    node = Node.new("doop")
-    list.assign_head_node(node)
-    assert_equal node, list.head_node
-  end
-
   def test_count_returns_count
     node = Node.new("doop")
     list = LinkedList.new
@@ -42,9 +35,8 @@ class LinkedListTest < Minitest::Test
 
   def test_list_append
     list = LinkedList.new
-    node = Node.new("doop")
+    list.append("doop")
     list.append("deep")
-    list.assign_head_node(node)
 
     assert_equal "deep", list.node_list[1].data
   end
@@ -59,13 +51,32 @@ class LinkedListTest < Minitest::Test
     assert_equal "doop doop doop ", list.to_string
   end
 
-  def test_list_next
-    list = LinkedList.new
-    node = Node.new("doop")
-    list.append("deep")
-    list.assign_head_node(node)
+  def test_insert
+     skip
+     list = LinkedList.new
+     list.append("deep")
+     list.append("doop")
+     list.append("deet")
+     list.insert(1, "derp")
 
-    assert_equal 1, list.next_node
-    #assert_equal "deep", list.next_node.data
+     assert_equal "derp", list.node_list[1].data
+     assert_equal "deep", list.node_list[1].data
   end
+
+  def test_prepend
+
+    list = LinkedList.new
+    list.append("deep")
+    list.append("doop")
+    list.append("deet")
+    list.prepend("do")
+
+    assert_equal "do", list.node_list[1].data
+    assert_equal "deep", list.node_list[1].data
+  end
+  # insert will insert one or more elements at a given position in the list.
+  #  It takes two parameters, the first one is the position at which to
+  #  insert nodes,
+  # the second parameter is the string of data to be inserted.
+
 end

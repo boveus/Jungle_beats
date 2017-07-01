@@ -7,8 +7,8 @@ require './lib/node'
 class NodeTest < Minitest::Test
 
   def test_node_init_with_data
-    node = Node.new("doop")
-    assert_equal "doop", node.data
+    node = Node.new("plop")
+    assert_equal "plop", node.data
   end
 
   def test_nextnode_returns_nil
@@ -17,15 +17,14 @@ class NodeTest < Minitest::Test
   end
 
   def test_find_next_node
-    data = "doop"
-    node = Node.new(data)
+    node = Node.new("doop")
     node.next_node
-    assert_equal 1, node.next
+    assert_equal nil, node.next_node
   end
 
   def test_is_head_node
     node = Node.new("doop")
-    node.make_headnode
-    assert_equal node.is_headnode?, true
+    node.is_headnode
+    assert_equal node.headnode, true
   end
 end
