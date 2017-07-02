@@ -1,7 +1,7 @@
 class LinkedList
 attr_reader  :head,
              :node_list
-             
+
   def initialize
     @head = nil
     @song = []
@@ -30,7 +30,7 @@ attr_reader  :head,
       @head = Node.new(data)
       reset_current_node
     else
-    add_new_node(data)
+      add_new_node(data)
     end
   end
 
