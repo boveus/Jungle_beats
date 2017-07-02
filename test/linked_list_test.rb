@@ -38,7 +38,7 @@ class LinkedListTest < Minitest::Test
     assert_equal 1, @list.count
   end
 
-  def test_list_with_ten_nodes
+  def test_list_count_with_ten_nodes
     10.times { add_node }
 
     assert_equal 10, @list.count
@@ -57,8 +57,9 @@ class LinkedListTest < Minitest::Test
   #   assert_equal 10000, @list.count
   # end
 
-  # This breaks the test.
-  # def test_she_cant_take_many_more_nodes_captain
+  #  This breaks the test.
+
+  # def test_she_cant_take_any_more_nodes_captain
   #   100000.times { add_node }
   #
   #   assert_equal 100000, @list.count
@@ -159,7 +160,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_making_it_pop
-    skip
     add_node("deep")
     add_node("woo")
     add_node("shi")
@@ -167,28 +167,8 @@ class LinkedListTest < Minitest::Test
     add_node("blop")
     binding.pry
 
-    first = @list.pop
-    second = @list.pop
-
-    assert_equal "blop", first
-    assert_equal "shu", second
+    assert_equal "blop", @list.pop
+    assert_equal "shu", @list.pop
     assert_equal "deep woo shi", @list.to_string
   end
 end
-#
-# > list.to_string
-# => "deep woo shi shu blop"
-# > list.find(2, 1)
-# => "shi"
-# > list.find(1, 3)
-# => "woo shi shu"
-# > list.includes?("deep")
-# => true
-# > list.includes?("dep")
-# => false
-# > list.pop
-# => "blop"
-# > list.pop
-# => "shu"
-# > list.to_string
-# => "deep woo shi"
