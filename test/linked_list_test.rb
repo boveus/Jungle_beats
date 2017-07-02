@@ -16,102 +16,167 @@ require './lib/node'
 
 
 class LinkedListTest < Minitest::Test
-  def test_count_returns_count
-    list = LinkedList.new
-    2.times do
-      list.append("doop")
+  def setup
+    @list = LinkedList.new
+    def add_node(data = "TEST")
+      @data = data
+      @list.append(data)
     end
-    list.assign_head_node
-    assert_equal list.node_list.count, 2
   end
 
-  def test_head
-    list = LinkedList.new
-    list.append("doop")
-    list.assign_head_node
-    assert_equal list.head, list.node_list[0]
+  def test_list_head_returns_nil_if_empty
+    assert_nil @list.head
   end
 
-  def test_list_append
-    list = LinkedList.new
-    list.append("doop")
-    list.append("deep")
-
-    assert_equal "deep", list.node_list[1].data
+  def test_list_head_next_node_returns_nil_if_no_neighbor
+    add_node
+    assert_nil @list.head.next_node
   end
 
-  def test_to_string_returns_all_nodes
-    list = LinkedList.new
-    3.times do
-      list.append("doop")
-    end
-    list.assign_head_node
-    assert_equal "doop doop doop ", list.to_string
+  def test_list_count_with_single_node
+    add_node
+    assert_equal 1, @list.count
   end
 
-  def test_insert_handles_data_properly
-     list = LinkedList.new
-     list.append("deep")
-     list.append("doop")
-     list.append("deet")
-     list.insert(1, "derp")
+  def test_list_with_ten_nodes
+    10.times { add_node }
 
-
-     assert_equal "deep", list.node_list[0].data
-     assert_equal "derp", list.node_list[1].data
-     assert_equal "doop", list.node_list[2].data
+    assert_equal 10, @list.count
   end
 
-  def test_insert_retains_headnode
+  # def test_ridiculous_number_of_nodes
+  #   1000.times { add_node }
+  #
+  #   assert_equal 1000, @list.count
+  # end
+  #
+  # this adds 5 seconds to the test
+  # def test_no_stop_please_no_more_nodes
+  #   10000.times { add_node }
+  #
+  #   assert_equal 10000, @list.count
+  # end
+
+  # This breaks the test.
+  # def test_she_cant_take_many_more_nodes_captain
+  #   100000.times { add_node }
+  #
+  #   assert_equal 100000, @list.count
+  # end
+
+  def test_list_to_string
+
+    add_node("doop")
+
+    assert_equal "doop", @list.to_string
+  end
+
+  def test_list_to_string_three_nodes
+    3.times { add_node("doop") }
+    assert_equal "doop doop doop", @list.to_string
+  end
+
+  def test_list_count_three_nodes
+    3.times { add_node }
+    assert_equal 3, @list.count
+  end
+
+  def test_head_next_node_returns_node_object
+
+    add_node("doop")
+    add_node("deep")
+
+    assert_equal Node, @list.head.next_node.class
+  end
+
+  def test_prepend_actually_prepends
+    add_node("plop")
+    add_node("suu")
+    @list.prepend("dop")
+
+    assert_equal "dop plop suu", @list.to_string
+  end
+
+  def test_prepend_sets_headnode
+    add_node("plop")
+    add_node("suu")
+    @list.prepend("dop")
+
+    assert_equal "dop", @list.head.data
+    assert_equal 3, @list.count
+  end
+
+  def test_insert_actually_inserts
+
+    add_node("dop")
+    add_node("plop")
+    add_node("suu")
+    @list.insert(1, "woo")
+
+    assert_equal "dop woo plop suu", @list.to_string
+  end
+
+  def test_insert_doesnt_break_head
+    add_node("dop")
+    add_node("plop")
+    add_node("suu")
+    @list.insert(1, "woo")
+
+    assert_equal "dop", @list.head.data
+  end
+
+  def test_insert_with_invalid_positions_and_arguments
+    add_node("dop")
+    add_node("plop")
+    add_node("suu")
+    @list.insert(5, "woo")
+    @list.insert(0, "woo")
+    @list.insert("woo", 1)
+
+    assert_equal "dop plop suu", @list.to_string
+  end
+
+  def test_find_actually_finds_stuff
+    add_node("deep")
+    add_node("woo")
+    add_node("shi")
+    add_node("shu")
+    add_node("blop")
+
+    assert_equal "shi", @list.find(2, 1)
+    assert_equal "woo shi shu", @list.find(1, 3)
+  end
+
+  def test_that_includes_is_truthy_and_falsy
+    add_node("deep")
+    add_node("woo")
+    add_node("shi")
+    add_node("shu")
+    add_node("blop")
+
+    assert @list.includes?("deep")
+    refute @list.includes?("dep")
+  end
+
+  def test_making_it_pop
     skip
-    list = LinkedList.new
-    list.append("deep")
-    list.append("doop")
-    list.append("deet")
-    list.insert(1, "derp")
+    add_node("deep")
+    add_node("woo")
+    add_node("shi")
+    add_node("shu")
+    add_node("blop")
+    binding.pry
 
-    assert list.node_list[0].headnode
+    first = @list.pop
+    second = @list.pop
+
+    assert_equal "blop", first
+    assert_equal "shu", second
+    assert_equal "deep woo shi", @list.to_string
   end
-
-  def test_prepend_retains_headnode
-
-    list = LinkedList.new
-    list.append("deep")
-    list.append("doop")
-    list.append("deet")
-    list.prepend("do")
-
-    assert list.node_list[0].headnode
-  end
-
-  def test_prepend_appends_correctly
-
-    list = LinkedList.new
-    list.append("one")
-    list.append("two")
-    list.append("three")
-    list.prepend("actually im one")
-    assert_equal "actually im one", list.node_list[0].data
-    assert_equal "one", list.node_list[1].data
-  end
-
-  def test_find_returns_song_lyric
-
-    list = LinkedList.new
-    list.append("deep")
-    list.append("woo")
-    list.append("shi")
-    list.append("shu")
-    list.append("blop")
-
-    assert_equal "shi", list.find(2,1)
-    assert_equal "woo shi shu", list.find(1, 3)
-
-  end
-
-# position to return, number of elements
-
-#     > list.to_string
+end
+#
+# > list.to_string
 # => "deep woo shi shu blop"
 # > list.find(2, 1)
 # => "shi"
@@ -127,9 +192,3 @@ class LinkedListTest < Minitest::Test
 # => "shu"
 # > list.to_string
 # => "deep woo shi"
-
-
-
-
-
-end

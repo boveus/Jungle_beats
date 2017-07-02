@@ -1,111 +1,112 @@
 class LinkedList
-  attr_reader :head_node,
-              :node_list
+attr_reader  :head,
+             :node_list
+             
   def initialize
-    @head_node = nil
-    @current_node = 0
-    @node_list = []
+    @head = nil
+    @song = []
+    @current_node = nil
+    @count = 0
   end
 
-  def assign_head_node
-      @head_node = @node_list[0]
-      @head_node.is_headnode
+  def count
+    if @current_node.next_node != nil
+      @current_node = @current_node.next_node
+      @count += 1
+      count
+    elsif @head != nil
+      @count += 1
+    end
+     reset_current_node
+      return @count
   end
+
+  def reset_current_node
+    @current_node = @head
+  end
+
   def append(data)
-    @node_list << Node.new(data)
-    assign_head_node
+    if @head == nil
+      @head = Node.new(data)
+      reset_current_node
+    else
+    add_new_node(data)
+    end
   end
-  def head
-    @head_node
+
+  def add_new_node(data)
+    if @current_node.next_node != nil
+      @current_node = @current_node.next_node
+      add_new_node(data)
+    else
+      @current_node.set_next_node(Node.new(data))
+    end
+    reset_current_node
+  end
+
+
+  def prepend(data)
+    new_node = Node.new(data)
+    new_node.set_next_node(@head)
+    @head = new_node
+    reset_current_node
+  end
+
+  def go_to_node(position)
+    reset_current_node
+    (position - 1).times { @current_node = @current_node.next_node }
+    return @current_node
+  end
+
+  def insert(position, data)
+    if (position.is_a? Integer) && (data.is_a? String)
+    new_node = Node.new(data)
+      if position < count && position > 1
+        go_to_node(position - 1)
+        @current_node.set_next_node(new_node)
+        go_to_node(position)
+        new_node.set_next_node(@current_node)
+      elsif position < count && position == 1
+        new_node.set_next_node(@head.next_node)
+        @head.set_next_node(new_node)
+      end
+    end
+    reset_current_node
   end
 
   def to_string
-    song = ""
-    string_list = @node_list.map do |node|
-        node.data + " "
-    end
-    string_list.each do |lyric|
-      song = song + lyric
-    end
-    return song
-  end
-
-  def active_node
-    @node_list[@current_node]
-  end
-
-  def set_next_node(node)
-    if node.index + 1 != @node_list.length
-    node.set_next_node(node.index + 1)
+    if @current_node.next_node != nil
+      @song << @current_node.data
+      @current_node = @current_node.next_node
+      to_string
     else
-      node.set_next_node(nil)
+      @song << @current_node.data
+      reset_current_node
     end
+      @song.join(' ')
   end
 
-  def set_previous_node(node)
-    if node.headnode == false
-      node.set_previous_node(node.index - 1)
-    else
-        node.set_previous_node(nil)
+  def find(location, number_of_lyrics)
+    go_to_node(location + 1)
+    lyrics = []
+    number_of_lyrics.times do
+      lyrics << @current_node.data
+      @current_node = @current_node.next_node
     end
+    reset_current_node
+    lyrics.join(' ')
   end
 
-  def set_node_location
-    @node_list.each do |node|
-      set_next_node(node)
-      set_previous_node(node)
+  def includes?(lyric)
+    if @current_node.data == lyric
+      reset_current_node
+      return true
+    elsif @current_node.next_node != nil
+      @current_node = @current_node.next_node
+      includes?(lyric)
+    elsif @current_node.next_node == nil && @current_node.data != lyric
+      reset_current_node
+      return false
     end
-    set_node_indices
-  end
-
-  def set_node_indices
-    @node_list.each_with_index do |node, index|
-        node.change_index(index)
-    end
-    assign_head_node
-  end
-
-  def shift_data_right
-    new_node = Node.new("null")
-    new_node_list = []
-    new_node_list << new_node
-    @node_list.each do |node|
-      new_node_list << node
-    end
-    @node_list = new_node_list
-  end
-
-  def shift_data_around_new_node(index, data)
-    new_node = Node.new(data)
-    new_node_list = []
-    @node_list.each_with_index do |node, node_index|
-      if node_index == index
-        new_node_list[node_index + 1] = node
-      elsif node_index > index
-        new_node_list << node
-      elsif node_index < index
-        new_node_list[node_index] = node
-      end
-    end
-    new_node_list[index] = new_node
-    @node_list = new_node_list
-  end
-
-  def insert(index, data)
-    shift_data_around_new_node(index, data)
-    set_node_indices
-    assign_head_node
-    set_node_location
-  end
-
-  def prepend(data)
-    shift_data_right
-    set_node_indices
-    head_node.change_data(data)
-    set_node_location
   end
 end
-
-# need a function to set node index by rael index
-# need a function to iterate through each node and set the neighbors
-# it also needs to iterate through each node's data and move it over one
