@@ -28,7 +28,9 @@ attr_reader  :head,
   end
 
   def append(data)
-    if @head == nil
+    if data == nil
+      return
+    elsif @head == nil
       @head = Node.new(data)
       reset_current_node
     else
@@ -80,7 +82,7 @@ attr_reader  :head,
 
   def pop
     last_node_data = get_last_node.data
-    get_second_to_last_node.set_next_node_nil
+    get_second_to_last_node.set_next_node(nil)
     reset_current_node
     last_node_data
 

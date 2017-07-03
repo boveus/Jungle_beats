@@ -2,8 +2,9 @@ class JungleBeat
 attr_reader  :list
 
 
-  def initialize
+  def initialize(first_beat = nil)
     @list = LinkedList.new
+    @head_node = @list.append(first_beat)
   end
 
   def count
@@ -12,9 +13,17 @@ attr_reader  :list
 
   def play
     beats = @list.to_string
-    command = `say -r 500 -v Boing #{beats}`
-    command
+    `say -r 500 -v Boing #{beats}`
   end
+
+  def validate_note(note)
+
+  end
+
+  def prepend(notes)
+
+  end
+
 
   def append(notes)
     notesholder = notes.split(" ")

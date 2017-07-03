@@ -7,7 +7,6 @@
 #   - *list method contains first node? or all nodes?*
 gem 'minitest'
 
-require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
 
@@ -165,7 +164,6 @@ class LinkedListTest < Minitest::Test
     add_node("shi")
     add_node("shu")
     add_node("blop")
-    binding.pry
 
     assert_equal "blop", @list.pop
     assert_equal "shu", @list.pop
