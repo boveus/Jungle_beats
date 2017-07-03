@@ -57,4 +57,30 @@ class JungleBeatTest < Minitest::Test
   def test_prepend_returns_successful_prendendations
     assert_equal 3, @jungle_beat.prepend("tee tee tee Mississippi")
   end
+
+  def test_adjust_voice_rate
+    @jungle_beat.set_rate(100)
+    @jungle_beat.append("deep doo ditt")
+    @jungle_beat.append("woo hoo shu")
+    @jungle_beat.play
+    #assert, voice talks slower...
+  end
+
+  def test_change_voice
+    @jungle_beat.set_voice("Alice")
+    @jungle_beat.append("deep doo ditt")
+    @jungle_beat.append("woo hoo shu")
+    @jungle_beat.play
+    #assert, voice is alice...
+  end
+
+  def test_reset_rate
+    @jungle_beat.reset_rate
+    assert_equal 500, @jungle_beat.rate
+  end
+
+  def test_reset_voice
+    @jungle_beat.reset_voice
+    assert_equal "Boing", @jungle_beat.voice
+  end
 end
