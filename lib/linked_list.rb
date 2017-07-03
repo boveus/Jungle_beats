@@ -10,7 +10,9 @@ attr_reader  :head,
   end
 
   def count
-    if @current_node.next_node != nil
+    if @current_node == nil
+      return @count
+    elsif @current_node.next_node != nil
       go_to_next_node
       @count += 1
       count
