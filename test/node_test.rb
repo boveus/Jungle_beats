@@ -28,14 +28,4 @@ class NodeTest < Minitest::Test
     @node.set_next_node(nil)
     assert_nil @node.next_node
   end
-
-  # > require "./lib/node"
-  # > node = Node.new("plop")
-  # > node.data
-  # => "plop"
-  # > node.next_node
-  # => nil
-
-
-
 end

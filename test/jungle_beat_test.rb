@@ -57,9 +57,4 @@ class JungleBeatTest < Minitest::Test
   def test_prepend_returns_successful_prendendations
     assert_equal 3, @jungle_beat.prepend("tee tee tee Mississippi")
   end
-
-
-
-  # tee dee deep bop boop la na
-
 end

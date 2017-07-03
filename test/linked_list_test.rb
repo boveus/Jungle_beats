@@ -57,7 +57,6 @@ class LinkedListTest < Minitest::Test
   # end
 
   #  This breaks the test.
-
   # def test_she_cant_take_any_more_nodes_captain
   #   100000.times { add_node }
   #
@@ -65,7 +64,6 @@ class LinkedListTest < Minitest::Test
   # end
 
   def test_list_to_string
-
     add_node("doop")
 
     assert_equal "doop", @list.to_string
@@ -107,7 +105,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_insert_actually_inserts
-
     add_node("dop")
     add_node("plop")
     add_node("suu")

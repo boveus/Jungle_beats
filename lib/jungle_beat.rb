@@ -1,7 +1,6 @@
 class JungleBeat
 attr_reader  :list
 
-
   def initialize(first_beat = nil)
     @list = LinkedList.new
     @head_node = @list.append(first_beat)
