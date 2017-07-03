@@ -22,7 +22,7 @@ attr_reader  :head,
 
   def to_string
     if @current_node.next_node != nil
-      @song << @current_node.data
+      @song << @current_node.dat
       go_to_next_node
       to_string
     else
@@ -115,6 +115,7 @@ attr_reader  :head,
     @current_node
   end
 
+  #pass @current_node as argument and default it to head...
   def go_to_next_node
     @current_node = @current_node.next_node
   end
