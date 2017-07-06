@@ -63,7 +63,6 @@ class JungleBeatTest < Minitest::Test
     @jungle_beat.append("deep doo ditt")
     @jungle_beat.append("woo hoo shu")
     @jungle_beat.play
-    #assert, voice talks slower...
   end
 
   def test_change_voice
@@ -71,7 +70,6 @@ class JungleBeatTest < Minitest::Test
     @jungle_beat.append("deep doo ditt")
     @jungle_beat.append("woo hoo shu")
     @jungle_beat.play
-    #assert, voice is alice...
   end
 
   def test_reset_rate

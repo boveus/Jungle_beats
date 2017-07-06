@@ -22,7 +22,7 @@ attr_reader  :head,
 
   def to_string
     if @current_node.next_node != nil
-      @song << @current_node.dat
+      @song << @current_node.data
       go_to_next_node
       to_string
     else
@@ -41,18 +41,23 @@ attr_reader  :head,
     reset_current_node
   end
 
-  def count
+  def count_nodes
     if @current_node == nil
       return @count
     elsif @current_node.next_node != nil
       go_to_next_node
-      @count += 1
-      count
+      increase_count_by_one
+      count_nodes
+      #increase count by one method
     elsif @head != nil
-      @count += 1
+      increase_count_by_one
     end
-     reset_current_node
-     @count
+  end
+
+  def count
+    count_nodes
+    reset_current_node
+    @count
   end
 
   def prepend(data)
@@ -115,7 +120,6 @@ attr_reader  :head,
     @current_node
   end
 
-  #pass @current_node as argument and default it to head...
   def go_to_next_node
     @current_node = @current_node.next_node
   end
@@ -136,5 +140,9 @@ attr_reader  :head,
 
   def reset_current_node
     @current_node = @head
+  end
+
+  def increase_count_by_one
+    @count += 1
   end
 end
