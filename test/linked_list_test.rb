@@ -95,14 +95,15 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_insert_with_invalid_positions_and_arguments
-    add_node("dop")
-    add_node("plop")
-    add_node("suu")
-    @list.insert(5, "woo")
-    @list.insert(0, "woo")
-    @list.insert("woo", 1)
+    list = LinkedList.new
+    list.append("dop")
+    list.append("plop")
+    list.append("suu")
+    list.insert(5, "woo")
+    list.insert(0, "woo")
+    list.insert("woo", 1)
 
-    assert_equal "dop plop suu", @list.to_string
+    assert_equal "dop plop suu", list.to_string
   end
 
   def test_find_actually_finds_stuff

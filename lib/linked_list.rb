@@ -4,7 +4,6 @@ attr_reader  :head,
 
   def initialize
     @head = nil
-    @song = []
     @current_node = nil
     @count = 0
   end
@@ -20,15 +19,19 @@ attr_reader  :head,
     end
   end
 
-  def to_string
+  def to_string(song = [])
     if @current_node.next_node != nil
-      @song << @current_node.data
+      add_current_note(song)
       go_to_next_node
-      to_string
+      to_string(song)
     else
-      @song << @current_node.data
+      add_current_note(song)
     end
-      @song.join(' ')
+      song.join(' ')
+  end
+
+  def add_current_note(song)
+    song << @current_node.data
   end
 
   def add_new_node(data)
