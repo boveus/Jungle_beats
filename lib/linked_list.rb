@@ -51,7 +51,6 @@ attr_reader  :head,
       go_to_next_node
       increase_count_by_one
       count_nodes
-      #increase count by one method
     elsif @head != nil
       increase_count_by_one
     end

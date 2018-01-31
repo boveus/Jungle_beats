@@ -10,34 +10,32 @@ attr_reader   :list,
     @voice = "Boing"
     @valid_notes = ['tee', 'dee', 'deep', 'bop', 'boop', 'la', 'na', 'ditt', 'hoo', 'shu', 'doo', 'woo']
     @valid_voices = ['Alice', 'Boing']
-    @valid_note_counter = 0
   end
 
   def prepend(notes)
-    @valid_note_counter = 0
-    notesholder = notes.split(" ")
-    notesholder.join(" ")
-    notesholder.each do |note|
-      @list.prepend(validated(note))
-    end
-    @valid_note_counter
+    add_notes_to_song(notes, "prepend")
   end
 
   def append(notes)
-    @valid_note_counter = 0
-    notesholder = notes.split(" ")
-    notesholder.join(" ")
-    notesholder.each do |note|
-      @list.append(validated(note))
-    end
-    @valid_note_counter
+    add_notes_to_song(notes, "append")
   end
 
-  def validated(note)
-    if @valid_notes.include? note
-      @valid_note_counter += 1
-      note
+  def add_notes_to_song(notes, method)
+    all_notes = notes.split(" ")
+    all_notes.each do |note|
+      if valid?(note) && method == "append"
+        @list.append(note)
+      elsif valid?(note) && method == "prepend"
+        @list.prepend(note)
+      else
+        all_notes.delete(note)
+      end
     end
+    all_notes.count
+  end
+
+  def valid?(note)
+    @valid_notes.include? note
   end
 
   def play
