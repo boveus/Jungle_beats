@@ -55,6 +55,7 @@ attr_reader  :head,
   end
 
   def count
+    @count = 0
     count_nodes
     reset_current_node
     @count
@@ -114,26 +115,25 @@ attr_reader  :head,
     end
   end
 
+
+  def go_to_next_node
+    @current_node = @current_node.next_node
+  end
+
   def get_node_by_position(position)
     reset_current_node
     (position - 1).times { go_to_next_node }
     @current_node
   end
 
-  def go_to_next_node
-    @current_node = @current_node.next_node
-  end
-
   def get_second_to_last_node
     reset_current_node
-    @count = 0
     (count - 2).times { go_to_next_node }
     @current_node
   end
 
   def get_last_node
     reset_current_node
-    @count = 0
     (count - 1).times { go_to_next_node }
     @current_node
   end
