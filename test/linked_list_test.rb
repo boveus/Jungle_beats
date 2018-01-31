@@ -1,10 +1,3 @@
-# - Build a linkedlist class
-#   - Method .head returns head node
-#   - Method .next method returns next node
-#     - do next_node method of next node within the list
-#   - Method .count returns number of nodes
-#   - Method .to_string returns all nodes as a single string
-#   - *list method contains first node? or all nodes?*
 gem 'minitest'
 
 require 'minitest/autorun'
@@ -43,26 +36,6 @@ class LinkedListTest < Minitest::Test
     assert_equal 10, @list.count
   end
 
-  # def test_ridiculous_number_of_nodes
-  #   1000.times { add_node }
-  #
-  #   assert_equal 1000, @list.count
-  # end
-  #
-  # this adds 5 seconds to the test
-  # def test_no_stop_please_no_more_nodes
-  #   10000.times { add_node }
-  #
-  #   assert_equal 10000, @list.count
-  # end
-
-  #  This breaks the test.
-  # def test_she_cant_take_any_more_nodes_captain
-  #   100000.times { add_node }
-  #
-  #   assert_equal 100000, @list.count
-  # end
-
   def test_list_to_string
     add_node("doop")
 
@@ -80,7 +53,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_head_next_node_returns_node_object
-
     add_node("doop")
     add_node("deep")
 
@@ -123,14 +95,15 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_insert_with_invalid_positions_and_arguments
-    add_node("dop")
-    add_node("plop")
-    add_node("suu")
-    @list.insert(5, "woo")
-    @list.insert(0, "woo")
-    @list.insert("woo", 1)
+    list = LinkedList.new
+    list.append("dop")
+    list.append("plop")
+    list.append("suu")
+    list.insert(5, "woo")
+    list.insert(0, "woo")
+    list.insert("woo", 1)
 
-    assert_equal "dop plop suu", @list.to_string
+    assert_equal "dop plop suu", list.to_string
   end
 
   def test_find_actually_finds_stuff

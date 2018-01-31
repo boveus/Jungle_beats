@@ -4,7 +4,6 @@ attr_reader  :head,
 
   def initialize
     @head = nil
-    @song = []
     @current_node = nil
     @count = 0
   end
@@ -20,15 +19,19 @@ attr_reader  :head,
     end
   end
 
-  def to_string
+  def to_string(song = [])
     if @current_node.next_node != nil
-      @song << @current_node.data
+      add_current_note(song)
       go_to_next_node
-      to_string
+      to_string(song)
     else
-      @song << @current_node.data
+      add_current_note(song)
     end
-      @song.join(' ')
+      song.join(' ')
+  end
+
+  def add_current_note(song)
+    song << @current_node.data
   end
 
   def add_new_node(data)
@@ -41,18 +44,23 @@ attr_reader  :head,
     reset_current_node
   end
 
-  def count
+  def count_nodes
     if @current_node == nil
       return @count
     elsif @current_node.next_node != nil
       go_to_next_node
-      @count += 1
-      count
+      increase_count_by_one
+      count_nodes
     elsif @head != nil
-      @count += 1
+      increase_count_by_one
     end
-     reset_current_node
-     @count
+  end
+
+  def count
+    @count = 0
+    count_nodes
+    reset_current_node
+    @count
   end
 
   def prepend(data)
@@ -109,31 +117,36 @@ attr_reader  :head,
     end
   end
 
-  def get_node_by_position(position)
-    reset_current_node
-    (position - 1).times { go_to_next_node }
-    @current_node
-  end
 
   def go_to_next_node
     @current_node = @current_node.next_node
   end
 
+  def get_node_by_position(position)
+    reset_current_node
+    find_nth_node(position - 1)
+  end
+
   def get_second_to_last_node
     reset_current_node
-    @count = 0
-    (count - 2).times { go_to_next_node }
-    @current_node
+    find_nth_node(count - 2)
   end
 
   def get_last_node
     reset_current_node
-    @count = 0
-    (count - 1).times { go_to_next_node }
+    find_nth_node(count - 1)
+  end
+
+  def find_nth_node(number)
+    number.times { go_to_next_node }
     @current_node
   end
 
   def reset_current_node
     @current_node = @head
+  end
+
+  def increase_count_by_one
+    @count += 1
   end
 end
