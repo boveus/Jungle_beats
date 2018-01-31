@@ -122,19 +122,21 @@ attr_reader  :head,
 
   def get_node_by_position(position)
     reset_current_node
-    (position - 1).times { go_to_next_node }
-    @current_node
+    find_nth_node(position - 1)
   end
 
   def get_second_to_last_node
     reset_current_node
-    (count - 2).times { go_to_next_node }
-    @current_node
+    find_nth_node(count - 2)
   end
 
   def get_last_node
     reset_current_node
-    (count - 1).times { go_to_next_node }
+    find_nth_node(count - 1)
+  end
+
+  def find_nth_node(number)
+    number.times { go_to_next_node }
     @current_node
   end
 
